@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
     $('#earthquakes1').dataTable({
         "columnDefs": [{
             "targets": -1,

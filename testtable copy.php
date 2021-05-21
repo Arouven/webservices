@@ -64,28 +64,28 @@
     // Code goes here
 
     $(document).ready(function() {
-      // var lat = 47.35387;
-      //var lon = 8.43609;
       var map = null;
       var myMarker;
       var myLatlng;
 
-      function initializeGMap(lat, lon) {
-        var zoom = 15;
-        var fromProjection = new OpenLayers.Projection("EPSG:4326"); // Transform from WGS 1984
-        var toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-        var position = new OpenLayers.LonLat(lon, lat).transform(fromProjection, toProjection);
+      function initializeGMap(lat, lng) {
+        myLatlng = new google.maps.LatLng(lat, lng);
 
-        map = new OpenLayers.Map("map_canvas");
-        var mapnik = new OpenLayers.Layer.OSM();
-        map.addLayer(mapnik);
+        var myOptions = {
+          zoom: 12,
+          zoomControl: true,
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
 
-        var markers = new OpenLayers.Layer.Markers("Markers");
-        map.addLayer(markers);
-        markers.addMarker(new OpenLayers.Marker(position));
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-        map.setCenter(position, zoom);
+        myMarker = new google.maps.Marker({
+          position: myLatlng
+        });
+        myMarker.setMap(map);
       }
+
       // Re-init map before show modal
       $('#myModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget);
@@ -96,11 +96,8 @@
 
       // Trigger map resize event after modal shown
       $('#myModal').on('shown.bs.modal', function() {
-
-        map.updateSize();
-      });
-      $('#myModal').on('hidden.bs.modal', function() {
-        $("#map_canvas").html('');
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(myLatlng);
       });
     });
   </script>

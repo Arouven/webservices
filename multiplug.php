@@ -3,12 +3,12 @@
 
 class multiplug
 {
-    private $magnitude_mag_uncertainty;
-    private  $magnitude_mag_value;
-    private $origin_longitude_value;
-    private $origin_latitude_value;
-    private  $origin_time_value;
-    private     $description_text;
+    private string $magnitude_mag_uncertainty;
+    private string  $magnitude_mag_value;
+    private string $origin_longitude_value;
+    private string $origin_latitude_value;
+    private string $origin_time_value;
+    private   string  $description_text;
 
     function __construct($magnitudeUncertainty, $magnitudeValue, $longitudeValue, $latitudeValue, $dateTimeValue, $description)
     {
@@ -20,7 +20,7 @@ class multiplug
         $this->description_text = $description;
     }
 
-    function earthquakeClass($value)
+    function earthquakeClass(string $value)
     {
         // Class	Magnitude
         // Great	8 or more
@@ -44,26 +44,34 @@ class multiplug
         } else {
             return 'Negligible';
         }
+        echo $value;
     }
     function outputting()
     {
         if (empty(strval($this->magnitude_mag_uncertainty))) {
-            $magnitude_mag_uncertainty = 'n.a';
+            $this->magnitude_mag_uncertainty = 'n.a';
         }
         $magnitude_mag = strval("$this->magnitude_mag_value ± $this->magnitude_mag_uncertainty");
         $origin_coordinates = strval("($this->origin_longitude_value, $this->origin_latitude_value)");
         $highlightMagnitudeClasses = $this->earthquakeClass($this->magnitude_mag_value);
         echo '
         <tr>
-        <td>' . $this->origin_time_value . '</td>
-        <td>' . $this->description_text . '</td>
-        <td class="' . $highlightMagnitudeClasses . '">' . $magnitude_mag . '</td>
-        <td>' . $origin_coordinates . '</td>
-        <td>
-            <button type="button" class="btn btn-primary" style="margin:auto;display:block;" title="open map ' . $this->description_text . '">
-            <i class="fas fa-map-marked-alt"></i>
-            </button>
-        </td>
+            <td>' . $this->origin_time_value . '</td>
+            <td>' . $this->description_text . '</td>
+            <td class="' . $highlightMagnitudeClasses . '">' . $magnitude_mag . '</td>
+            <td>' . $origin_coordinates . '</td>
+            <td>
+                <button type="button" 
+                class="btn btn-primary" 
+                style="margin:auto; display:block;" 
+                data-toggle="modal" 
+                data-target="#myModal" 
+                data-lat=' . $this->origin_latitude_value . ' 
+                data-lng=' . $this->origin_longitude_value . ' 
+                title="open map ' . $this->description_text . '">
+                    <i class="fas fa-map-marked-alt"></i>
+                </button>
+            </td>
         </tr>
         ';
     }

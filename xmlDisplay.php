@@ -8,7 +8,6 @@ class xmlDisplay
     function __construct($url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00')
     {
         $this->url = $url;
-
         $xml = simplexml_load_file($this->url);
 
         foreach ($xml->children()->children() as $event) {
@@ -21,8 +20,11 @@ class xmlDisplay
             $magnitude_mag_uncertainty = $event->magnitude->mag->uncertainty;
             $origin_longitude_value = $event->origin->longitude->value;
             $origin_latitude_value = $event->origin->latitude->value;
-            $mp = new multiplug($magnitude_mag_uncertainty, $magnitude_mag_value, $origin_longitude_value, $origin_latitude_value, $origin_time_value, $description_text);
-            $mp->outputting();
+            //echo $magnitude_mag_uncertainty, $magnitude_mag_value, $origin_longitude_value, $origin_latitude_value, $origin_time_value, $description_text;
+            if ($description_text != null) {
+                $mp = new multiplug($magnitude_mag_uncertainty, $magnitude_mag_value, $origin_longitude_value, $origin_latitude_value, $origin_time_value, $description_text);
+                $mp->outputting();
+            }
         }
     }
 }
