@@ -1,0 +1,16 @@
+.Moderate,
+.Strong {
+  color: orange;
+}
+
+.Moderate,
+.Strong,
+.Major,
+.Great {
+  font-weight: bold;
+}
+
+.Major,
+.Great {
+  color: red;
+}
