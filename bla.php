@@ -62,7 +62,7 @@
       </select>
     </div>
     <div class="col-sm-4">
-      <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="myfunction();" />
+      <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="myfunction2();" />
 
     </div>
 
@@ -203,7 +203,7 @@
     });
   </script>
   <script>
-    function myfunction() { //format=quakeml&starttime=2000-01-15T00:00:00&endtime=2021-01-17T01:00:00&alertlevel=red
+    function myfunction() {
       var output = window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
       var format = $('#format').val();
       output += "format=" + format;
@@ -222,9 +222,46 @@
         output += "&alertlevel=" + al;
       }
       output += "'";
-      // alert(window.location.search);
-      //alert(output);
       window.open(output, "_self");
+    }
+
+    function GetURLParameter(sParam) {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+          return sParameterName[1];
+        }
+      }
+    }
+
+    function myfunction2() {
+      var url = window.location.href; //window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
+      url = url.substring(url.indexOf('%27') + 0);
+      url = url.replaceAll('%27', '');
+
+      url = new URL(url);
+      var format = url.searchParams.get("format");
+      var starttime = url.searchParams.get("starttime");
+      var endtime = url.searchParams.get("endtime");
+      var alertlevel = url.searchParams.get("alertlevel");
+
+      if (starttime != null) {
+        $("#start_date").val() = starttime;
+      }
+      if (endtime != null) {
+        $("#end_date").val() = endtime;
+      }
+      if (alertlevel != null) {
+        $('#alertlevel').val() = alertlevel;
+      }
+      if (format != null) {
+        $('#format').val() = format;
+      }
+      //else {}
+      //alert();
+      //window.open(output, "_self");
     }
   </script>
 </body>
