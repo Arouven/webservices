@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.css">
   <link rel="stylesheet" href="bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="datatables/1.10.24/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
   <link rel="stylesheet" href="mycss.css">
   <style>
 
@@ -18,29 +17,43 @@
 
 </head>
 
-<body onload="myloader();">
+<body onload="fillElements();">
   <h1>sexy page
   </h1>
   <br>
   <br>
-  <br>
+
   <div class="row">
     <div class="col-sm-4">
-      <div class="controls input-append date form_datetime" data-date="2020-09-16T05:25:07Z" data-date-format="yyyy-M-dd hh:mm:ss">
-        Startdate:
-        <input type="text" value="" name="start_date" id="start_date" readonly class="form-control">
-        <span class="add-on"><i class="icon-remove"></i></span>
-        <span class="add-on"><i class="icon-th"></i></span>
-      </div>
+      Startdate:
     </div>
     <div class="col-sm-4">
-      <div class="controls input-append date form_datetime" data-date="2021-09-16T05:25:07Z" data-date-format="yyyy-M-dd hh:mm:ss">
-        <!-- data-link-field="dtp_input2"> -->
-        Enddate:
-        <input type="text" value="" name="end_date" id="end_date" readonly class="form-control">
-        <span class="add-on"><i class="icon-remove"></i></span>
-        <span class="add-on"><i class="icon-th"></i></span>
-      </div>
+      Enddate:
+    </div>
+    <div class="col-sm-4">
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="datetime-local" value="" name="start_date" id="start_date" class="form-control">
+      <span class="add-on"><i class="icon-remove"></i></span>
+      <span class="add-on"><i class="icon-th"></i></span>
+      <input type="hidden" id="dtp_sd" value="" />
+    </div>
+    <div class="col-sm-4">
+      <input type="datetime-local" value="" name="end_date" id="end_date" class="form-control">
+      <span class="add-on"><i class="icon-remove"></i></span>
+      <span class="add-on"><i class="icon-th"></i></span>
+      <input type="hidden" id="dtp_ed" value="" />
+
+    </div>
+    <div class="col-sm-2">
+      <button onclick='xmlCore();' class="btn btn-primary form-control">core xml</button>
+    </div>
+    <div class="col-sm-2">
+      <button onclick='jsonCore();' class="btn btn-primary form-control">core json</button>
     </div>
   </div>
   <br>
@@ -61,7 +74,7 @@
       </select>
     </div>
     <div class="col-sm-4">
-      <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="myfunction();" />
+      <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="buildURL();" />
 
     </div>
 
@@ -183,77 +196,10 @@
   <script src="jquery-3.5.1.min.js"></script>
   <script src="bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="datatables/1.10.24/js/jquery.dataTables.min.js"></script>
-  <script src="bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-
-  <script src="mydatatables.js"></script>
-  <script src="mymap.js"></script>
-  <script type="text/javascript" src="bootstrap-datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+  <script src="myjs.js"></script>
   <script>
-    $('.form_datetime').datetimepicker({
-      weekStart: 1,
-      todayBtn: 1,
-      autoclose: 1,
-      todayHighlight: 1,
-      startView: 2,
-      forceParse: 0,
-      showMeridian: 1
-    });
-  </script>
-  <script>
-    function myfunction() {
-      var output = window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
-      var format = $('#format').val();
-      output += "format=" + format;
-      var dt1 = $("#start_date").val();
-      if (dt1) {
-        var starttime = (new Date(dt1).toISOString()).replace('.000Z', '').slice(0, -2) + "00";
-        output += "&starttime=" + starttime;
-      }
-      var dt2 = $("#end_date").val();
-      if (dt2) {
-        var endtime = (new Date(dt2).toISOString()).replace('.000Z', '').slice(0, -2) + "00";
-        output += "&endtime=" + endtime;
-      }
-      var al = $('#alertlevel').val();
-      if (al) {
-        output += "&alertlevel=" + al;
-      }
-      output += "'";
-      window.open(output, "_self");
-    }
 
-
-
-    function myloader() {
-      var url = window.location.href; //window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
-      url = url.substring(url.indexOf('%27') + 0);
-      url = url.replaceAll('%27', '');
-
-      url = new URL(url);
-      var format = url.searchParams.get("format");
-      var starttime = url.searchParams.get("starttime");
-      var endtime = url.searchParams.get("endtime");
-      var alertlevel = url.searchParams.get("alertlevel");
-      $('#format').val(format);
-      if (starttime != null) {
-        //alert();
-        //var dateFormat = require('dateformat');
-        var st = (new Date(starttime + '.000Z')).toISOString();
-        //var out = dateFormat(st, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-        $("#start_date").val(st);
-      }
-      if (endtime != null) {
-        $("#end_date").val(endtime);
-      }
-      if (alertlevel != null) {
-        $('#alertlevel').val(alertlevel);
-      }
-      //else {}
-      //alert(format + ', ' + starttime + ', ' + endtime + ', ' + alertlevel);
-      //window.open(output, "_self");
-    }
   </script>
 </body>
 
