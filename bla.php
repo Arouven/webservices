@@ -12,7 +12,18 @@
   <link rel="stylesheet" href="datatables/1.10.24/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="mycss.css">
   <style>
+    @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
+
+
+    #clock {
+      font-family: 'Orbitron', sans-serif;
+      color: #66ff99;
+      font-size: 56px;
+      text-align: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
   </style>
 
 </head>
@@ -20,6 +31,15 @@
 <body onload="fillElements();">
   <h1>sexy page
   </h1>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-8">
+    </div>
+    <div class="col-sm-4">
+      <div id="clock"></div>
+    </div>
+  </div>
   <br>
   <br>
 
@@ -40,14 +60,11 @@
       <input type="datetime-local" value="" name="start_date" id="start_date" class="form-control">
       <span class="add-on"><i class="icon-remove"></i></span>
       <span class="add-on"><i class="icon-th"></i></span>
-      <input type="hidden" id="dtp_sd" value="" />
     </div>
     <div class="col-sm-4">
       <input type="datetime-local" value="" name="end_date" id="end_date" class="form-control">
       <span class="add-on"><i class="icon-remove"></i></span>
       <span class="add-on"><i class="icon-th"></i></span>
-      <input type="hidden" id="dtp_ed" value="" />
-
     </div>
     <div class="col-sm-2">
       <button onclick='xmlCore();' class="btn btn-primary form-control">core xml</button>
@@ -127,44 +144,88 @@
       </tbody>
     </table>
   </div>
-  <div class="colorCode">
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Class</th>
-          <th>Magnitude</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="Great">
-          <td>Great</td>
-          <td>8 or more</td>
-        </tr>
-        <tr class="Major">
-          <td>Major</td>
-          <td>7 - 7.9</td>
-        </tr>
-        <tr class="Strong">
-          <td>Strong</td>
-          <td>6 - 6.9</td>
-        </tr>
-        <tr class="Moderate">
-          <td>Moderate</td>
-          <td>5 - 5.9</td>
-        </tr>
-        <tr class="Light">
-          <td>Light</td>
-          <td>4 - 4.9</td>
-        </tr>
-        <tr class="Minor">
-          <td>Minor</td>
-          <td>3 -3.9</td>
-        </tr>
-      </tbody>
-    </table>
+  <br>
+  <br>
+  <div class="legend">
+    <div class="time">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Magnitude</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="Great">
+            <td>Great</td>
+            <td>8 or more</td>
+          </tr>
+          <tr class="Major">
+            <td>Major</td>
+            <td>7 - 7.9</td>
+          </tr>
+          <tr class="Strong">
+            <td>Strong</td>
+            <td>6 - 6.9</td>
+          </tr>
+          <tr class="Moderate">
+            <td>Moderate</td>
+            <td>5 - 5.9</td>
+          </tr>
+          <tr class="Light">
+            <td>Light</td>
+            <td>4 - 4.9</td>
+          </tr>
+          <tr class="Minor">
+            <td>Minor</td>
+            <td>3 -3.9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    parameter default description
+    endtime present time Limit to events on or before the specified end time. NOTE: All times use ISO8601 Date/Time format. Unless a timezone is specified, UTC is assumed.
+    starttime NOW - 30 days Limit to events on or after the specified start time. NOTE: All times use ISO8601 Date/Time format. Unless a timezone is specified, UTC is assumed.
+
+
+    <div class="colorCode">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Magnitude</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="Great">
+            <td>Great</td>
+            <td>8 or more</td>
+          </tr>
+          <tr class="Major">
+            <td>Major</td>
+            <td>7 - 7.9</td>
+          </tr>
+          <tr class="Strong">
+            <td>Strong</td>
+            <td>6 - 6.9</td>
+          </tr>
+          <tr class="Moderate">
+            <td>Moderate</td>
+            <td>5 - 5.9</td>
+          </tr>
+          <tr class="Light">
+            <td>Light</td>
+            <td>4 - 4.9</td>
+          </tr>
+          <tr class="Minor">
+            <td>Minor</td>
+            <td>3 -3.9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
-
-
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
