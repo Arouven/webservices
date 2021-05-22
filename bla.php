@@ -18,7 +18,7 @@
 
 </head>
 
-<body>
+<body onload="myloader();">
   <h1>sexy page
   </h1>
   <br>
@@ -26,22 +26,21 @@
   <br>
   <div class="row">
     <div class="col-sm-4">
-      <div class="controls input-append date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+      <div class="controls input-append date form_datetime" data-date="2020-09-16T05:25:07Z" data-date-format="yyyy-M-dd hh:mm:ss">
         Startdate:
         <input type="text" value="" name="start_date" id="start_date" readonly class="form-control">
         <span class="add-on"><i class="icon-remove"></i></span>
         <span class="add-on"><i class="icon-th"></i></span>
       </div>
-      <input type="hidden" id="dtp_input1" value="" /><br />
     </div>
     <div class="col-sm-4">
-      <div class="controls input-append date form_datetime" data-date="2019-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+      <div class="controls input-append date form_datetime" data-date="2021-09-16T05:25:07Z" data-date-format="yyyy-M-dd hh:mm:ss">
+        <!-- data-link-field="dtp_input2"> -->
         Enddate:
         <input type="text" value="" name="end_date" id="end_date" readonly class="form-control">
         <span class="add-on"><i class="icon-remove"></i></span>
         <span class="add-on"><i class="icon-th"></i></span>
       </div>
-      <input type="hidden" id="dtp_input2" value="" /><br />
     </div>
   </div>
   <br>
@@ -62,7 +61,7 @@
       </select>
     </div>
     <div class="col-sm-4">
-      <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="myfunction2();" />
+      <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="myfunction();" />
 
     </div>
 
@@ -207,12 +206,12 @@
       var output = window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
       var format = $('#format').val();
       output += "format=" + format;
-      var dt1 = $("#dtp_input1").val();
+      var dt1 = $("#start_date").val();
       if (dt1) {
         var starttime = (new Date(dt1).toISOString()).replace('.000Z', '').slice(0, -2) + "00";
         output += "&starttime=" + starttime;
       }
-      var dt2 = $("#dtp_input2").val();
+      var dt2 = $("#end_date").val();
       if (dt2) {
         var endtime = (new Date(dt2).toISOString()).replace('.000Z', '').slice(0, -2) + "00";
         output += "&endtime=" + endtime;
@@ -225,18 +224,9 @@
       window.open(output, "_self");
     }
 
-    function GetURLParameter(sParam) {
-      var sPageURL = window.location.search.substring(1);
-      var sURLVariables = sPageURL.split('&');
-      for (var i = 0; i < sURLVariables.length; i++) {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-          return sParameterName[1];
-        }
-      }
-    }
 
-    function myfunction2() {
+
+    function myloader() {
       var url = window.location.href; //window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
       url = url.substring(url.indexOf('%27') + 0);
       url = url.replaceAll('%27', '');
@@ -246,21 +236,22 @@
       var starttime = url.searchParams.get("starttime");
       var endtime = url.searchParams.get("endtime");
       var alertlevel = url.searchParams.get("alertlevel");
-
+      $('#format').val(format);
       if (starttime != null) {
-        $("#start_date").val() = starttime;
+        //alert();
+        //var dateFormat = require('dateformat');
+        var st = (new Date(starttime + '.000Z')).toISOString();
+        //var out = dateFormat(st, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+        $("#start_date").val(st);
       }
       if (endtime != null) {
-        $("#end_date").val() = endtime;
+        $("#end_date").val(endtime);
       }
       if (alertlevel != null) {
-        $('#alertlevel').val() = alertlevel;
-      }
-      if (format != null) {
-        $('#format').val() = format;
+        $('#alertlevel').val(alertlevel);
       }
       //else {}
-      //alert();
+      //alert(format + ', ' + starttime + ', ' + endtime + ', ' + alertlevel);
       //window.open(output, "_self");
     }
   </script>
