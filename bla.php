@@ -75,34 +75,41 @@
     <table id="earthquakes1" class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>Date and Time</th>
+          <th>Date and Time (UTC)</th>
           <th>Name and description</th>
           <th>Magnitude</th>
           <th>Coordinates (Longitude, Latitude)</th>
+          <th>Depth (km)</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <?php
-        $url = $_SERVER["QUERY_STRING"];
-        $url = strstr($url, '%27');
-        $url = str_replace("%27", "", $url);
         require('display.php');
+        if ($_SERVER["QUERY_STRING"] != null) {
+          $url = trim($_SERVER["QUERY_STRING"]);
+          $url = strstr($url, '%27');
+          $url = str_replace("%27", "", $url);
 
-        // Use parse_url() function to parse the URL 
-        // and return an associative array which
-        // contains its various components
-        $url_components = parse_url($url);
 
-        // Use parse_str() function to parse the
-        // string passed via URL
-        parse_str($url_components['query'], $params);
+          // Use parse_url() function to parse the URL 
+          // and return an associative array which
+          // contains its various components
+          $url_components = parse_url($url);
 
-        if ($params['format'] == 'quakeml') {
-          new xmlDisplay($url);
-        }
-        if ($params['format'] == 'geojson') {
-          new jsonDisplay($url);
+          // Use parse_str() function to parse the
+          // string passed via URL
+          parse_str($url_components['query'], $params);
+          $display = new display();
+          if ($params['format'] == 'quakeml') {
+            $display->xmlDisplay($url);
+          }
+          if ($params['format'] == 'geojson') {
+            $display->jsonDisplay($url);
+          }
+        } else {
+          $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
+          header("Location: $url");
         }
         ?>
       </tbody>
