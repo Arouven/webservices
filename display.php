@@ -10,6 +10,7 @@ class display
     {
         $this->url = $urlinput;
         $xml = @simplexml_load_file($this->url);
+
         if (false !== $xml) { //remove errors 
             // Do anything with xml
 
@@ -24,7 +25,10 @@ class display
                     $longitude = $event->origin->longitude->value;
                     $latitude = $event->origin->latitude->value;
                     $depth = strval(((float)$event->origin->depth->value) / 1000); //convert to km
-                    $this->fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth);
+                    $url_components = parse_url($event['publicID']);
+                    parse_str($url_components['query'], $params);
+                    $url = 'https://earthquake.usgs.gov/earthquakes/eventpage/' . $params['eventid'];
+                    $this->fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
                 }
             }
         }
@@ -41,13 +45,14 @@ class display
             $longitude = $data['features'][$key]['geometry']['coordinates'][0];
             $latitude = $data['features'][$key]['geometry']['coordinates'][1];
             $depth = $data['features'][$key]['geometry']['coordinates'][2];
-            $this->fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth);
+            $url = $data['features'][$key]['properties']['url'];
+            $this->fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
         }
     }
-    function fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth)
+    function fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url)
     {
         if ($description != null) {
-            new multiplug($datetime, $description, $magnitude, $longitude, $latitude, $depth);
+            new multiplug($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
         }
     }
 }

@@ -4,14 +4,15 @@
 class multiplug
 {
     private string $datetime;
-    private   string  $description;
-    private string  $magnitude;
+    private string $description;
+    private string $magnitude;
     private string $longitude;
     private string $latitude;
     private string $depth;
+    private string $url;
 
 
-    function __construct($datetime, $description, $magnitude, $longitude, $latitude, $depth)
+    function __construct($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url)
     {
         $this->datetime = $datetime;
         $this->description = $description;
@@ -19,6 +20,7 @@ class multiplug
         $this->longitude = $longitude;
         $this->latitude = $latitude;
         $this->depth = $depth;
+        $this->url = $url;
         $this->outputting();
     }
 
@@ -61,13 +63,19 @@ class multiplug
             <td>
                 <button type="button" 
                 class="btn btn-primary" 
-                style="margin:auto; display:block;" 
+                style="width: 100px;aligh: left;" 
                 data-toggle="modal" 
                 data-target="#myModal" 
                 data-lat=' . $this->latitude . ' 
                 data-lng=' . $this->longitude . ' 
                 title="open map ' . $this->description . '">
                     <i class="fas fa-map-marked-alt"></i>
+                </button>
+                <button type="button" 
+                class="btn btn-primary" 
+                style="width: 100px;align: right;" 
+                onclick="location.href = \'' . $this->url . '\';">
+                    <i class="fa fa-external-link-square-alt"></i>
                 </button>
             </td>
         </tr>
