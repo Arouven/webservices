@@ -1,5 +1,15 @@
+<!-- <!doctype html> -->
 <!DOCTYPE html>
+<!--
+Template Name: Wavefire
+Author: <a href="https://www.os-templates.com/">OS Templates</a>
+Author URI: https://www.os-templates.com/
+Copyright: OS-Templates.com
+Licence: Free to use under our free template licence terms
+Licence URI: https://www.os-templates.com/template-terms
+-->
 <html lang="">
+<!-- To declare your language - read more here: https://www.w3.org/International/questions/qa-html-language-declarations -->
 
 <head>
   <title>Wavefire | Pages | Full Width</title>
@@ -9,7 +19,7 @@
   <link rel="stylesheet" href="../fontawesome-free-5.15.3-web/css/all.css">
   <link rel="stylesheet" href="../bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="../datatables/1.10.24/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="../layout/styles/mycss.css">
+  <link href="../layout/styles/mycss.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
@@ -205,25 +215,32 @@
                 // map de mo region
                 // map of the whole world
                 // redirect to another page
+
+
                 // code
                 // comment partout
+
                 // report show all
                 // functionality
                 // flow chart
                 // screen shot
                 // works well
+
                 //video some code parts
                 //show all fn
                 // most complex fn -- to explain coding (1 or 2)
-                require '../php files/display.php';
+                require('../php files/display.php');
                 if ($_SERVER["QUERY_STRING"] != null) {
                   $url = trim($_SERVER["QUERY_STRING"]);
                   $url = strstr($url, '%27');
                   $url = str_replace("%27", "", $url);
+
+
                   // Use parse_url() function to parse the URL 
                   // and return an associative array which
                   // contains its various components
                   $url_components = parse_url($url);
+
                   // Use parse_str() function to parse the
                   // string passed via URL
                   parse_str($url_components['query'], $params);
@@ -237,14 +254,16 @@
                 } else {
                   $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
                   echo $url;
-                  //echo "<script>window.location.href = '" . $url . "';</script>";
-                  exit(header("Location: $url"));
+                  header("Location: $url");
                 }
                 ?>
               </tbody>
             </table>
           </div>
         </div>
+
+
+
         <br>
         <br>
         <div class="legend">
@@ -287,6 +306,8 @@
           parameter default description
           endtime present time Limit to events on or before the specified end time. NOTE: All times use ISO8601 Date/Time format. Unless a timezone is specified, UTC is assumed.
           starttime NOW - 30 days Limit to events on or after the specified start time. NOTE: All times use ISO8601 Date/Time format. Unless a timezone is specified, UTC is assumed.
+
+
           <div class="colorCode">
             <table class="table table-bordered table-striped">
               <thead>
