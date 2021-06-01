@@ -63,7 +63,7 @@ class multiplug
             <td>
                 <button type="button" 
                 class="btn btn-primary" 
-                style="width: 100px;aligh: left;" 
+                style="width: 30px;aligh: left;" 
                 data-toggle="modal" 
                 data-target="#myModal" 
                 data-lat=' . $this->latitude . ' 
@@ -73,7 +73,7 @@ class multiplug
                 </button>
                 <button type="button" 
                 class="btn btn-primary" 
-                style="width: 100px;align: right;" 
+                style="width: 30px;align: right;" 
                 onclick="location.href = \'' . $this->url . '\';">
                     <i class="fa fa-external-link-square-alt"></i>
                 </button>
@@ -82,4 +82,3 @@ class multiplug
         ';
     }
 }
-?>

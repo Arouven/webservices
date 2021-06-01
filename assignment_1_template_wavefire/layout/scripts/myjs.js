@@ -1,6 +1,6 @@
+
 $(document).ready(function () {
     //datatable
-
     $('#earthquakes1').dataTable({
         "columnDefs": [{
             "targets": -1,
@@ -100,6 +100,9 @@ function fillElements() {
     var endtime = url.searchParams.get("endtime");
     var alertlevel = url.searchParams.get("alertlevel");
 
+    // if (format) {
+    //     xmlCore();
+    // }
     $('#format').val(format);
     if (starttime) {
         $("#start_date").attr('value', starttime);
@@ -136,3 +139,6 @@ function updateTime(k) {
 }
 
 currentTime();
+
+
+

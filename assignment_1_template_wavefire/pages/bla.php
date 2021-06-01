@@ -1,4 +1,3 @@
-<!-- <!doctype html> -->
 <!DOCTYPE html>
 <!--
 Template Name: Wavefire
@@ -123,9 +122,9 @@ Licence URI: https://www.os-templates.com/template-terms
 
 
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-2">
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-8">
             <div id="clock"></div>
           </div>
         </div>
@@ -229,7 +228,7 @@ Licence URI: https://www.os-templates.com/template-terms
                 //video some code parts
                 //show all fn
                 // most complex fn -- to explain coding (1 or 2)
-                require('../php files/display.php');
+                require('../php_files/display.php');
                 if ($_SERVER["QUERY_STRING"] != null) {
                   $url = trim($_SERVER["QUERY_STRING"]);
                   $url = strstr($url, '%27');
@@ -251,11 +250,16 @@ Licence URI: https://www.os-templates.com/template-terms
                   if ($params['format'] == 'geojson') {
                     $display->jsonDisplay($url);
                   }
-                } else {
-                  $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
-                  echo $url;
-                  header("Location: $url");
+                  // if ($params['format'] == null) {
+                  //   echo 'ssssssssss';
+                  // };
                 }
+
+                // else {
+                //   $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
+                //   echo $url;
+                //   header("Location: $url");
+                // }
                 ?>
               </tbody>
             </table>
@@ -514,7 +518,19 @@ Licence URI: https://www.os-templates.com/template-terms
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
   <script src="../layout/scripts/myjs.js"></script>
   <script>
-
+    function detectQueryString() {
+      var currentQueryString = window.location.search;
+      if (currentQueryString) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+    $(document).ready(function() {
+      if (!detectQueryString()) {
+        xmlCore();
+      }
+    });
   </script>
 
 </body>
