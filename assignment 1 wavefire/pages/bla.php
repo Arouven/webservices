@@ -5,12 +5,12 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>sexy page</title>
+  <title>super title</title>
 
-  <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.css">
-  <link rel="stylesheet" href="bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="datatables/1.10.24/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="mycss.css">
+  <link rel="stylesheet" href="../fontawesome-free-5.15.3-web/css/all.css">
+  <link rel="stylesheet" href="../bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../datatables/1.10.24/css/jquery.dataTables.min.css">
+  <link href="../layout/styles/mycss.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
@@ -29,7 +29,7 @@
 </head>
 
 <body onload="fillElements();">
-  <h1>sexy page
+  <h1>super header title page
   </h1>
   <br>
   <br>
@@ -114,7 +114,25 @@
       </thead>
       <tbody>
         <?php
-        require('display.php');
+        // additional functionalities needed 2
+        // map de mo region
+        // map of the whole world
+        // redirect to another page
+
+
+        // code
+        // comment partout
+
+        // report show all
+        // functionality
+        // flow chart
+        // screen shot
+        // works well
+
+        //video some code parts
+        //show all fn
+        // most complex fn -- to explain coding (1 or 2)
+        require('../php files/display.php');
         if ($_SERVER["QUERY_STRING"] != null) {
           $url = trim($_SERVER["QUERY_STRING"]);
           $url = strstr($url, '%27');
@@ -254,11 +272,11 @@
   </div>
 
 
-  <script src="jquery-3.5.1.min.js"></script>
-  <script src="bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="datatables/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="../layout/scripts/jquery-3.5.1.min.js"></script>
+  <script src="../bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="../datatables/1.10.24/js/jquery.dataTables.min.js"></script>
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-  <script src="myjs.js"></script>
+  <script src="../layout/scripts/myjs.js"></script>
   <script>
 
   </script>
