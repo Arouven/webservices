@@ -4,11 +4,26 @@ include('multiplug.php');
 class display
 {
     private $url;
+    private $markers;
+    private $format;
 
 
-    function xmlDisplay($urlinput)
+
+
+
+    function __construct($format, $url)
     {
-        $this->url = $urlinput;
+        $this->url = $url;
+        $this->format = $format;
+
+        if ($this->format == 'quakeml') {
+            $this->xmlDisplay();
+        } else if ($this->format == 'geojson') {
+            $this->jsonDisplay();
+        }
+    }
+    function xmlDisplay()
+    {
         $xml = @simplexml_load_file($this->url);
 
         if (false !== $xml) { //remove errors 
@@ -29,13 +44,14 @@ class display
                     parse_str($url_components['query'], $params);
                     $url = 'https://earthquake.usgs.gov/earthquakes/eventpage/' . $params['eventid'];
                     $this->fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
+                    $this->setMarkers($longitude, $latitude);
                 }
+                $this->getjsMarkers();
             }
         }
     }
-    function jsonDisplay($urlinput)
+    function jsonDisplay()
     {
-        $this->url = $urlinput;
         $json = file_get_contents($this->url);
         $data = json_decode($json, true);
         foreach ($data['features'] as $key => $value) {
@@ -47,7 +63,19 @@ class display
             $depth = $data['features'][$key]['geometry']['coordinates'][2];
             $url = $data['features'][$key]['properties']['url'];
             $this->fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
+            $this->setMarkers($longitude, $latitude);
         }
+        $this->getjsMarkers();
+    }
+
+
+    function getjsMarkers()
+    {
+        echo "<script>var markers=[$this->markers];</script>";
+    }
+    function setMarkers($longitude, $latitude)
+    {
+        $this->markers = $this->markers . "[$longitude,$latitude],";
     }
     function fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url)
     {
@@ -56,4 +84,3 @@ class display
         }
     }
 }
-?>

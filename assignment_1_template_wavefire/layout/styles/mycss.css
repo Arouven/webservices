@@ -5,7 +5,7 @@
 
 .Moderate,
 .Strong,
-.Major,
+.Major,.BoldMe,
 .Great {
   font-weight: bold;
 }
@@ -14,3 +14,5 @@
 .Great {
   color: red;
 }
+
+th {text-align: center;}
