@@ -60,10 +60,10 @@ class multiplug
             <td class="' . $highlightMagnitudeClasses . '">' . $this->magnitude . '</td>
             <td>' . strval("($this->longitude, $this->latitude)") . '</td>
             <td>' . $this->depth . '</td>
-            <td>
+            <td style="width: 100px;">
                 <button type="button" 
                 class="btn btn-primary" 
-                style="width: 30px;aligh: left;" 
+                style="width: 40px;aligh: left;" 
                 data-toggle="modal" 
                 data-target="#myModal" 
                 data-lat=' . $this->latitude . ' 
@@ -73,7 +73,8 @@ class multiplug
                 </button>
                 <button type="button" 
                 class="btn btn-primary" 
-                style="width: 30px;align: right;" 
+                style="width: 40px;align: right;" 
+                title="Open details" 
                 onclick="location.href = \'' . $this->url . '\';">
                     <i class="fa fa-external-link-square-alt"></i>
                 </button>

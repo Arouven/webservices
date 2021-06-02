@@ -262,11 +262,13 @@
             // if ($params['format'] == null) {
             //   echo 'ssssssssss';
             // };
-          } else {
-            $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
-            echo $url;
-            header("Location: $url");
           }
+
+          // else {
+          //   $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
+          //   echo $url;
+          //   header("Location: $url");
+          // }
           ?>
         </tbody>
       </table>

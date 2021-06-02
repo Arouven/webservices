@@ -44,11 +44,11 @@ function bigMapBuilder() {
     }
 
 
-    // var colorList = ["red", "blue", "yellow"];
+    var colorList = ["red"];
     var layerName = [markers[0][2]];
     var styleArray = [new OpenLayers.StyleMap({
         pointRadius: 6,
-        fillColor: 'red',
+        fillColor: colorList[0],
         fillOpacity: 0.5
     })];
     var vectorLayer = [new OpenLayers.Layer.Vector(layerName[0], {
@@ -62,7 +62,7 @@ function bigMapBuilder() {
             layerName.push(markers[i][2]); // If new layer name found it is created
             styleArray.push(new OpenLayers.StyleMap({
                 pointRadius: 6,
-                fillColor: 'red',
+                fillColor: colorList[j % colorList.length],
                 fillOpacity: 0.5
             }));
             vectorLayer.push(new OpenLayers.Layer.Vector(layerName[j], {
@@ -79,6 +79,7 @@ function bigMapBuilder() {
             new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo), {
             description: "marker number " + i
         }
+            // see http://dev.openlayers.org/docs/files/OpenLayers/Feature/Vector-js.html#OpenLayers.Feature.Vector.Constants for more options
         );
         vectorLayer[layerName.indexOf(markers[i][2])].addFeatures(feature);
     }
@@ -168,11 +169,16 @@ function buildURL() {
     var format = $('#format').val();
     var starttime = $("#start_date").val();
     var endtime = $("#end_date").val();
+    var longitude = $("#lon").val();
+    var latitude = $("#lat").val();
+    var maxradiuskm = $("#rad").val();
     var alertlevel = $('#alertlevel').val();
     var currenttime = new Date();
 
     if ((Date.parse(starttime) > Date.parse(endtime)) || ((Date.parse(endtime) > Date.parse(currenttime)))) {
         alert("Invalid Date Range");
+    } else if ((parseFloat(maxradiuskm) > 20001.6)) {
+        alert("Invalid radius must be less than 20001.6");
     } else {
         output += "format=" + format;
         if (starttime) {
@@ -183,6 +189,15 @@ function buildURL() {
         }
         if (alertlevel) {
             output += "&alertlevel=" + alertlevel;
+        }
+        if (longitude) {
+            output += "&longitude=" + longitude;
+        }
+        if (latitude) {
+            output += "&latitude=" + latitude;
+        }
+        if ((maxradiuskm) && (longitude) && (latitude)) {
+            output += "&maxradiuskm=" + maxradiuskm;
         }
         output += "'";
         window.open(output, "_self");
@@ -201,6 +216,9 @@ function fillElements() {
     var starttime = url.searchParams.get("starttime");
     var endtime = url.searchParams.get("endtime");
     var alertlevel = url.searchParams.get("alertlevel");
+    var longitude = url.searchParams.get("longitude");
+    var latitude = url.searchParams.get("latitude");
+    var maxradiuskm = url.searchParams.get("maxradiuskm");
 
     // if (format) {
     //     xmlCore();
@@ -214,6 +232,15 @@ function fillElements() {
     }
     if (alertlevel) {
         $('#alertlevel').val(alertlevel);
+    }
+    if (longitude) {
+        $("#lon").val(longitude);
+    }
+    if (latitude) {
+        $("#lat").val(latitude);
+    }
+    if (maxradiuskm) {
+        $("#rad").val(maxradiuskm);
     }
 }
 
