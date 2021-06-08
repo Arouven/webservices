@@ -2,26 +2,16 @@
 <html lang="">
 
 <head>
-  <title>Wavefire | Pages | Full Width</title>
+  <title>EarthQuakes | Home Page</title>
   <meta charset="utf-8">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
   <link rel="stylesheet" href="../fontawesome-free-5.15.3-web/css/all.css">
   <link rel="stylesheet" href="../bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="../datatables/1.10.24/css/jquery.dataTables.min.css">
   <link href="../layout/styles/mycss.css" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Orbitron');
-
-    #clock {
-      font-family: 'Orbitron', sans-serif;
-      color: #66ff99;
-      font-size: 56px;
-      text-align: center;
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-  </style>
 </head>
+
+<!-- when the body load fill the elements with the appropriate details such as date time alertlevel format... -->
 
 <body onload="fillElements();">
   <div class="row">
@@ -82,15 +72,14 @@
       </select>
     </div>
     <div class="col-sm-4">
+      <!--on click the js will build the url and then request the server -->
       <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="buildURL();" />
-
     </div>
-
   </div>
   <br>
   <br>
 
-
+  <!-- legend tables -->
   <div class="legend">
     <div class="row">
       <div class="col-sm-3">
@@ -202,7 +191,7 @@
   </div>
   <br><br>
 
-
+  <!-- main table  -->
   <h1>Table of earthquakes</h1>
   <div class="scrollable">
     <div class="table-responsive">
@@ -219,56 +208,23 @@
         </thead>
         <tbody>
           <?php
-          // additional functionalities needed 2
-          // map de mo region
-          // map of the whole world
-          // redirect to another page
-
-
-          // code
-          // comment partout
-
-          // report show all
-          // functionality
-          // flow chart
-          // screen shot
-          // works well
-
-          //video some code parts
-          //show all fn
-          // most complex fn -- to explain coding (1 or 2)
-          require('../php_files/display.php');
-          if ($_SERVER["QUERY_STRING"] != null) {
-            $url = trim($_SERVER["QUERY_STRING"]);
-            $url = strstr($url, '%27');
-            $url = str_replace("%27", "", $url);
+          require('../php_files/display.php'); // allow to use the display class
+          if ($_SERVER["QUERY_STRING"] != null) { // check if there is any query in the url
+            $url = trim($_SERVER["QUERY_STRING"]); // remove unwanted white spaces
+            $url = strstr($url, '%27'); // keep the text as from %27 till the end
+            $url = str_replace("%27", "", $url); // remove the %27 in the url
 
 
             // Use parse_url() function to parse the URL 
             // and return an associative array which
             // contains its various components
-            $url_components = parse_url($url);
+            $url_components = parse_url($url); // convert the text into url
 
             // Use parse_str() function to parse the
             // string passed via URL
-            parse_str($url_components['query'], $params);
-            $display = new display($params['format'], $url);
-            // if ($params['format'] == 'quakeml') {
-            //   $display->xmlDisplay($url);
-            // }
-            // if ($params['format'] == 'geojson') {
-            //   $display->jsonDisplay($url);
-            // }
-            // if ($params['format'] == null) {
-            //   echo 'ssssssssss';
-            // };
+            parse_str($url_components['query'], $params); // store all queries in $params
+            new display($params['format'], $url); //create the display with the constructors parameters
           }
-
-          // else {
-          //   $url = $_SERVER['SCRIPT_NAME'] . "?url=" . "'https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'";
-          //   echo $url;
-          //   header("Location: $url");
-          // }
           ?>
         </tbody>
       </table>

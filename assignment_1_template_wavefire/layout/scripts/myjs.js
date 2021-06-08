@@ -1,3 +1,4 @@
+//start building big map
 function detectQueryString() {
     var currentQueryString = window.location.search;
     if (currentQueryString) {
@@ -8,15 +9,12 @@ function detectQueryString() {
 };
 
 function bigMapBuilder() {
-    // Adapted from: harrywood.co.uk
     epsg4326 = new OpenLayers.Projection("EPSG:4326")
-
     bmap = new OpenLayers.Map({
         div: "mapdiv",
         displayProjection: epsg4326 // With this setting, lat and lon are displayed correctly in MousePosition and permanent anchor
     });
 
-    //   map = new OpenLayers.Map("mapdiv");
     bmap.addLayer(new OpenLayers.Layer.OSM());
     bmap.addLayer(new OpenLayers.Layer.OSM("Wikimedia",
         ["https://maps.wikimedia.org/osm-intl/${z}/${x}/${y}.png"], {
@@ -25,7 +23,6 @@ function bigMapBuilder() {
             "crossOriginKeyword": null
         }
     }));
-    // See https://wiki.openstreetmap.org/wiki/Tile_servers for other OSM-based layers
 
     bmap.addControls([
         new OpenLayers.Control.MousePosition(),
@@ -78,51 +75,51 @@ function bigMapBuilder() {
         var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo), {
             description: "marker number " + i
-        }
-            // see http://dev.openlayers.org/docs/files/OpenLayers/Feature/Vector-js.html#OpenLayers.Feature.Vector.Constants for more options
-        );
+        });
         vectorLayer[layerName.indexOf(markers[i][2])].addFeatures(feature);
     }
-
     for (var i = 0; i < layerName.length; i++) {
         bmap.addLayer(vectorLayer[i]);
     }
 };
 
-$(document).ready(function () {
+$(document).ready(function () {//build the big map only if there is a query in the url
     if (!detectQueryString()) {
         xmlCore();
     }
     bigMapBuilder();
 });
+//end building big map
 
 
+//start datatables
 $(document).ready(function () {
-    //datatable
     $('#earthquakes1').dataTable({
-        "columnDefs": [{
+        "columnDefs": [{//remove search on the last column
             "targets": -1,
             "searchable": false
-        }, {
+        }, {//remove sorting on last and fourth column -- action and coordinates
             "targets": [-1, 3],
             "orderable": false,
         }],
-        "oLanguage": {
+        "oLanguage": {//rename search to quick search
             "sSearch": "Quick Search:"
         }
     });
 });
-$(document).ready(function () {//map
+//end datatables
+
+//start modal map
+$(document).ready(function () {
     var map = null;
 
-
     function initializeGMap(lat, lon) {
-        var zoom = 5;
+        var zoom = 5;// set the zoom number from 1 to 19
         var fromProjection = new OpenLayers.Projection("EPSG:4326"); // Transform from WGS 1984
         var toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
         var position = new OpenLayers.LonLat(lon, lat).transform(fromProjection, toProjection);
 
-        map = new OpenLayers.Map("map_canvas");
+        map = new OpenLayers.Map("map_canvas");//get the map id
         var mapnik = new OpenLayers.Layer.OSM();
         map.addLayer(mapnik);
 
@@ -130,7 +127,7 @@ $(document).ready(function () {//map
         map.addLayer(markers);
         markers.addMarker(new OpenLayers.Marker(position));
 
-        map.setCenter(position, zoom);
+        map.setCenter(position, zoom);// mark the position and center the map on that position
     }
     // Re-init map before show modal
     $('#myModal').on('show.bs.modal', function (event) {
@@ -141,31 +138,31 @@ $(document).ready(function () {//map
         $("#bodyRow1").html("Longitude: " + button.data('lng') + ", Latitude: " + button.data('lat'));
     });
 
-    // Trigger map resize event after modal shown
     $('#myModal').on('shown.bs.modal', function () {
-
-        map.updateSize();
+        map.updateSize();//resize the map accordingly once open in modal
     });
     $('#myModal').on('hidden.bs.modal', function () {
-        $("#map_canvas").html('');
+        $("#map_canvas").html('');//remove the map from the div
     });
 
 });
+//end modal map
 
 
 
 
-
-//url
-function xmlCore() {
+//start url
+function xmlCore() {// open the core functionality with the current tab and with the url below
     window.open(window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?format=quakeml&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'", "_self");
 }
 
-function jsonCore() {
+function jsonCore() {// open the core functionality with the current tab and with the url below
     window.open(window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-01-15T00:00:00&endtime=2020-01-15T12:00:00'", "_self");
 }
 function buildURL() {
-    var output = window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";
+    var output = window.location.pathname + "?url='https://earthquake.usgs.gov/fdsnws/event/1/query?";//build the initial url with the file.php followed by the query
+
+    // get appropriate values from elements
     var format = $('#format').val();
     var starttime = $("#start_date").val();
     var endtime = $("#end_date").val();
@@ -175,11 +172,12 @@ function buildURL() {
     var alertlevel = $('#alertlevel').val();
     var currenttime = new Date();
 
-    if ((Date.parse(starttime) > Date.parse(endtime)) || ((Date.parse(endtime) > Date.parse(currenttime)))) {
+    //validation
+    if ((Date.parse(starttime) > Date.parse(endtime)) || ((Date.parse(endtime) > Date.parse(currenttime)))) {//validation date
         alert("Invalid Date Range");
-    } else if ((parseFloat(maxradiuskm) > 20001.6)) {
+    } else if ((parseFloat(maxradiuskm) > 20001.6)) {// validation on the max radius
         alert("Invalid radius must be less than 20001.6");
-    } else {
+    } else {// build the url
         output += "format=" + format;
         if (starttime) {
             output += "&starttime=" + starttime;
@@ -199,19 +197,22 @@ function buildURL() {
         if ((maxradiuskm) && (longitude) && (latitude)) {
             output += "&maxradiuskm=" + maxradiuskm;
         }
-        output += "'";
-        window.open(output, "_self");
+        output += "'";//closing the url
+        window.open(output, "_self");//open the url in the current tab
         //alert(output);
     }
 }
+//end url
 
 
-
+//start fill html elements
 function fillElements() {
-    var url = window.location.href;
-    url = url.substring(url.indexOf('%27') + 0);
-    url = url.replaceAll('%27', '');
-    url = new URL(url);
+    var url = window.location.href;// get current url
+    url = url.substring(url.indexOf('%27') + 0);//reject text before %27
+    url = url.replaceAll('%27', '');//remove all %27
+    url = new URL(url);//change text to url
+
+    // get appropriate queries from url
     var format = url.searchParams.get("format");
     var starttime = url.searchParams.get("starttime");
     var endtime = url.searchParams.get("endtime");
@@ -220,9 +221,7 @@ function fillElements() {
     var latitude = url.searchParams.get("latitude");
     var maxradiuskm = url.searchParams.get("maxradiuskm");
 
-    // if (format) {
-    //     xmlCore();
-    // }
+    //set the elements with the appropriate values from the query
     $('#format').val(format);
     if (starttime) {
         $("#start_date").attr('value', starttime);
@@ -243,20 +242,22 @@ function fillElements() {
         $("#rad").val(maxradiuskm);
     }
 }
+//end filling html elements
 
-//clock
+
+//start clock
 function currentTime() {
-    var date = new Date(); /* creating object of Date class */
+    var date = new Date(); // creating object of Date class 
     var hour = date.getUTCHours();
     var min = date.getUTCMinutes();
     var sec = date.getUTCSeconds();
     hour = updateTime(hour);
     min = updateTime(min);
     sec = updateTime(sec);
-    document.getElementById("clock").innerText = "UTC " + hour + " : " + min + " : " + sec; /* adding time to the div */
+    document.getElementById("clock").innerText = "UTC " + hour + " : " + min + " : " + sec; // adding time to the div 
     var t = setTimeout(function () {
         currentTime()
-    }, 1000); /* setting timer */
+    }, 1000); // setting timer 
 }
 
 function updateTime(k) {
@@ -266,8 +267,20 @@ function updateTime(k) {
         return k;
     }
 }
-
 currentTime();
+//end clock
 
+// start fill location
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
 
-
+function showPosition(position) {
+    $('#lat').val(position.coords.latitude);
+    $('#lon').val(position.coords.longitude);
+}
+// end fill location

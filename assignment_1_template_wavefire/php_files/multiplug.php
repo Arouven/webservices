@@ -11,7 +11,7 @@ class multiplug
     private string $depth;
     private string $url;
 
-
+    //default constructor
     function __construct($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url)
     {
         $this->datetime = $datetime;
@@ -24,6 +24,7 @@ class multiplug
         $this->outputting();
     }
 
+    //get the classes -- to help css
     function earthquakeClass(string $value)
     {
         // Class	Magnitude
@@ -48,8 +49,9 @@ class multiplug
         } else {
             return 'Negligible';
         }
-        echo $value;
     }
+
+    //insert records in tables
     function outputting()
     {
         $highlightMagnitudeClasses = $this->earthquakeClass($this->magnitude);

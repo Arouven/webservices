@@ -2,55 +2,34 @@
 <html lang="">
 
 <head>
-    <title>Wavefire | Pages | Full Width</title>
+    <title>EarthQuakes | Regional Page</title>
     <meta charset="utf-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
     <link rel="stylesheet" href="../fontawesome-free-5.15.3-web/css/all.css">
     <link rel="stylesheet" href="../bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../datatables/1.10.24/css/jquery.dataTables.min.css">
     <link href="../layout/styles/mycss.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Orbitron');
-
-        #clock {
-            font-family: 'Orbitron', sans-serif;
-            color: #66ff99;
-            font-size: 56px;
-            text-align: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-        }
-    </style>
 </head>
+
+<!-- when the body load fill the elements with the appropriate details such as date time alertlevel format... -->
 
 <body onload="fillElements();">
     <?php
-
-    require('../php_files/display.php');
-    if ($_SERVER["QUERY_STRING"] != null) {
-        $url = trim($_SERVER["QUERY_STRING"]);
-        $url = strstr($url, '%27');
-        $url = str_replace("%27", "", $url);
-
+    require('../php_files/display.php'); // allow to use the display class
+    if ($_SERVER["QUERY_STRING"] != null) { // check if there is any query in the url
+        $url = trim($_SERVER["QUERY_STRING"]); // remove unwanted white spaces
+        $url = strstr($url, '%27'); // keep the text as from %27 till the end
+        $url = str_replace("%27", "", $url); // remove the %27 in the url
 
         // Use parse_url() function to parse the URL 
         // and return an associative array which
         // contains its various components
-        $url_components = parse_url($url);
+        $url_components = parse_url($url); // convert the text into url
 
         // Use parse_str() function to parse the
         // string passed via URL
-        parse_str($url_components['query'], $params);
-        $display = new display($params['format'], $url, false);
-        // if ($params['format'] == 'quakeml') {
-        //   $display->xmlDisplay($url);
-        // }
-        // if ($params['format'] == 'geojson') {
-        //   $display->jsonDisplay($url);
-        // }
-        // if ($params['format'] == null) {
-        //   echo 'ssssssssss';
-        // };
+        parse_str($url_components['query'], $params); // store all queries in $params
+        new display($params['format'], $url, false); //create the display with the constructors parameters without the table
     }
     ?>
     <div class="row">
@@ -114,26 +93,8 @@
             <input type="text" value="" id='lat' class="form-control">
         </div>
         <div class="col-sm-4">
+            <!--on click the js will get the clients coordinates and insert in in tge appropriate textbox -->
             <button onclick='getLocation();' class="btn btn-primary form-control">Get Location</button>
-
-            <script>
-                //var x = document.getElementById("demo");
-
-                function getLocation() {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(showPosition);
-                    } else {
-                        alert("Geolocation is not supported by this browser.");
-                    }
-                }
-
-                function showPosition(position) {
-                    $('#lat').val(position.coords.latitude);
-                    $('#lon').val(position.coords.longitude);
-                }
-            </script>
-
-
         </div>
     </div>
     <br>
@@ -156,58 +117,16 @@
             </select>
         </div>
         <div class="col-sm-4">
+            <!--on click the js will build the url and then request the server -->
             <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="buildURL();" />
-
         </div>
-
     </div>
     <br>
     <br>
 
-
+    <!-- legend tables -->
     <div class="legend">
         <div class="row">
-            <!-- <div class="col-sm-3">
-                <div class="colorCode">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Classes of earthquakes</th>
-                            </tr>
-                            <tr>
-                                <th>Class</th>
-                                <th>Magnitude</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="Great">
-                                <td>Great</td>
-                                <td>8 or more</td>
-                            </tr>
-                            <tr class="Major">
-                                <td>Major</td>
-                                <td>7 - 7.9</td>
-                            </tr>
-                            <tr class="Strong">
-                                <td>Strong</td>
-                                <td>6 - 6.9</td>
-                            </tr>
-                            <tr class="Moderate">
-                                <td>Moderate</td>
-                                <td>5 - 5.9</td>
-                            </tr>
-                            <tr class="Light">
-                                <td>Light</td>
-                                <td>4 - 4.9</td>
-                            </tr>
-                            <tr class="Minor">
-                                <td>Minor</td>
-                                <td>3 -3.9</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> -->
             <div class="col-sm-1"></div>
             <div class="col-sm-8">
                 <div class="colorCode">
@@ -239,7 +158,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
         <div class="row">
             <div class="dateCode col-sm-6">
