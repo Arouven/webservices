@@ -210,7 +210,7 @@ Licence URI: https://www.os-templates.com/template-terms
                     </div>
                     <div class="col-sm-4">
                         <!--on click the js will build the url and then request the server -->
-                        <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="buildURL();" />
+                        <input type="button" id="gotomap" value="Show Regional map" class="btn btn-info form-control" onclick="buildURL();" />
                     </div>
                 </div>
                 <br>
