@@ -63,23 +63,25 @@ class multiplug
             <td>' . strval("($this->longitude, $this->latitude)") . '</td>
             <td>' . $this->depth . '</td>
             <td style="width: 100px;">
-                <button type="button" 
-                class="btn btn-primary" 
-                style="width: 40px;aligh: left;" 
-                data-toggle="modal" 
-                data-target="#myModal" 
-                data-lat=' . $this->latitude . ' 
-                data-lng=' . $this->longitude . ' 
-                title="open map ' . $this->description . '">
-                    <i class="fas fa-map-marked-alt"></i>
-                </button>
-                <button type="button" 
-                class="btn btn-primary" 
-                style="width: 40px;align: right;" 
-                title="Open details" 
-                onclick="location.href = \'' . $this->url . '\';">
-                    <i class="fa fa-external-link-square-alt"></i>
-                </button>
+                <div style="text-align: center;">
+                    <button type="button" 
+                    class="btn btn-primary" 
+                    style="width: 40px;" 
+                    data-toggle="modal" 
+                    data-target="#myModal" 
+                    data-lat=' . $this->latitude . ' 
+                    data-lng=' . $this->longitude . ' 
+                    title="open map ' . $this->description . '">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </button>
+                    <button type="button" 
+                    class="btn btn-primary" 
+                    style="width: 40px;" 
+                    title="Open details" 
+                    onclick="location.href = \'' . $this->url . '\';">
+                        <i class="fa fa-external-link-square-alt"></i>
+                    </button>
+                </div>
             </td>
         </tr>
         ';

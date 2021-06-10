@@ -1,12 +1,6 @@
 <?php
-// additional functionalities needed 2
-// map de mo region
-// map of the whole world
+// additional functionalities needed 1
 // redirect to another page
-
-
-// code
-// comment partout
 
 // report show all
 // functionality
