@@ -1,7 +1,7 @@
 <?php
 
 
-class multiplug
+class tableFiller
 {
     private string $datetime;
     private string $description;
@@ -33,7 +33,7 @@ class multiplug
         // Strong	6 - 6.9
         // Moderate	5 - 5.9
         // Light	4 - 4.9
-        // Minor	3 -3.9
+        // Minor	3 - 3.9
         if ((int)$value >= 8) {
             return 'Great';
         } elseif ((int)$value == 7) {

@@ -2,11 +2,8 @@
 // additional functionalities needed 1
 // redirect to another page
 
-// report show all
-// functionality
+// report
 // flow chart
-// screen shot
-// works well
 
 //video some code parts
 //show all fn

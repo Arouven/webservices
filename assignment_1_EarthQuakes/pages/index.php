@@ -209,7 +209,7 @@ Licence URI: https://www.os-templates.com/template-terms
                     </tr>
                     <tr class="Minor">
                       <td>Minor</td>
-                      <td>3 -3.9</td>
+                      <td>3 - 3.9</td>
                     </tr>
                   </tbody>
                 </table>

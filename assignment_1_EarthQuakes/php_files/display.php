@@ -1,5 +1,5 @@
 <?php
-include('multiplug.php');
+include('tableFiller.php');
 
 class display
 {
@@ -103,6 +103,6 @@ class display
     //insert into table
     function fillTable($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url)
     {
-        new multiplug($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
+        new tableFiller($datetime, $description, $magnitude, $longitude, $latitude, $depth, $url);
     }
 }
