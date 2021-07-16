@@ -11,7 +11,7 @@ CREATE TABLE books(
     review Varchar(255) NOT NULL,
     best_seller boolean NOT NULL,
     no_books bigint(20) NOT NULL,
-    cover_photo longblob NOT NULL,
+    cover_photo varchar(255) NOT NULL,
 );
 
 INSERT INTO
