@@ -4,7 +4,7 @@
 require "../apis/allCard.php";
 $api = new api;
 
-$json = $api->selectAllBooks(); //get the content in the json file
+//$json = $api->selectAllBooks(); //get the content in the json file
 // $obj = json_decode($json, true);
 // // Display the value of json object
 // print $obj[0]['title'];
