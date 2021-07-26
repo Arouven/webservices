@@ -2,7 +2,7 @@
 
 require '../database.php';
 
-
+new api();
 
 class api
 {
@@ -10,25 +10,23 @@ class api
   private $query;
   private $db;
 
-  function __construct($url)
-  { // Use parse_url() function to parse the URL 
-    // and return an associative array which
-    // contains its various components
-    $url_components = parse_url(strtolower($url)); // convert the text into url
-
+  function __construct()
+  {
     // Use parse_str() function to parse the
     // string passed via URL
-    parse_str($url_components['query'], $params); // store all queries in $params
+    parse_str(strtolower($_SERVER["QUERY_STRING"]), $params); // store all queries in $params
     $querystring = "SELECT * FROM books";
     if (isset($params['format'])) {
       if ($params['format'] == 'json') {
         $this->format = 'json';
-        $this->query = $querystring + $this->subquery($params);
+        $this->query = $querystring . $this->subquery($params);
       }
       if ($params["format"] == "xml") {
         $this->format = 'xml';
-        $this->query = $querystring + $this->subquery($params);
+        $this->query = $querystring . $this->subquery($params);
       }
+      $this->db = new database();
+      print $this->select($this->query);
     } else {
       print "Welcome to bookstore api!";
       print "No api key or registration needed its all free to use!!!!!!!";
@@ -45,8 +43,6 @@ class api
       print "json output with title contains 'close' -- ?format=json&title=Close";
       print "xml output with author contains 'se', written in english, show highest rating first, limit the result to only 5 -- ?format=xml&author=se&language=english&orderby=rating&limit=5";
     }
-
-    $this->db = new database();
   }
   function subquery($params)
   {
@@ -64,21 +60,22 @@ class api
     if (isset($params['language'])) {
       array_push($subqueryarray, " language LIKE '%" . $params['language'] . "%'");
     }
-    if (isset($params['orderby'])) {
-      array_push($subqueryarray,  " ORDER BY " . $params['orderby'] . "");
-    }
-    if (isset($params['limit'])) {
-      array_push($subqueryarray,  " LIMIT " . $params['limit'] . "");
-    }
+
     if (!empty($subqueryarray)) {
-      $subquery += " WHERE";
+      $subquery .= " WHERE";
       foreach ($subqueryarray as $key => $value) {
         if (!empty($value)) {
-          $subquery += " AND" + $value;
+          $subquery .= " AND" . $value;
         }
       }
     }
-    return $subquery + ";";
+    if (isset($params['orderby'])) {
+      $subquery .=  " ORDER BY " . $params['orderby'] . "";
+    }
+    if (isset($params['limit'])) {
+      $subquery .=  " LIMIT " . $params['limit'] . "";
+    }
+    return str_replace(' WHERE AND', ' WHERE', $subquery . ";");
   }
   function select($selectquery = "SELECT * FROM books", $countquery = "SELECT COUNT(*) FROM books")
   {
@@ -121,7 +118,7 @@ class api
     header("HTTP/1.1 $status $statusMessage");
     $response['status'] = $status;
     $response['message'] = $statusMessage;
-    $response['count'] = $count;
+    $response['totalBookInDB'] = $count;
     $response['response'] = $data;
     return $response;
   }
