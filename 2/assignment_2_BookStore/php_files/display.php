@@ -110,10 +110,7 @@ class display
                     <br>
                     <b>Description: </b>' . $description . '
                     <br>
-
                 </div>
-                <div class="col-sm-3">  
-                    </div>
             </div>
             <br>
             ';

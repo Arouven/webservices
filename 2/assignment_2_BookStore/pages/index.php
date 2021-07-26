@@ -22,7 +22,7 @@ Licence URI: https://www.os-templates.com/template-terms
 
 <!-- when the body load fill the elements with the appropriate details such as date time alertlevel format... -->
 
-<body id="top">
+<body id="top" onload="fillElements()">
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
@@ -67,13 +67,7 @@ Licence URI: https://www.os-templates.com/template-terms
       <!-- ################################################################################################ -->
       <div id="searchform">
         <div>
-          <form action="#" method="post">
-            <fieldset>
-              <legend>Quick Search:</legend>
-              <input type="text" placeholder="Enter search term&hellip;">
-              <button type="submit"><i class="fas fa-search"></i></button>
-            </fieldset>
-          </form>
+
         </div>
       </div>
       <!-- ################################################################################################ -->
@@ -85,7 +79,7 @@ Licence URI: https://www.os-templates.com/template-terms
   <div class="wrapper bgded overlay" style="background-image:url('../images/demo/backgrounds/01.png');">
     <div id="breadcrumb" class="hoc clear">
       <!-- ################################################################################################ -->
-      <h6 class="heading">Earth Quakes</h6>
+      <h6 class="heading">BookStore</h6>
       <ul>
         <li><a href="#">Home Page</a></li>
       </ul>
@@ -105,52 +99,43 @@ Licence URI: https://www.os-templates.com/template-terms
         <br>
         <br>
 
-        <div class="row">
-          <div class="col-sm-4">
-            Startdate:
-          </div>
-          <div class="col-sm-4">
-            Enddate:
-          </div>
-          <div class="col-sm-4">
-          </div>
-        </div>
+
         <br>
         <br>
 
         <div class="row">
           <div class="col-sm-4">
-            <input type="datetime-local" value="" name="start_date" id="start_date" class="form-control">
-            <span class="add-on"><i class="icon-remove"></i></span>
-            <span class="add-on"><i class="icon-th"></i></span>
+            <input type="text" value="" name="isbn" id="isbn" class="form-control" placeholder="isbn">
           </div>
           <div class="col-sm-4">
-            <input type="datetime-local" value="" name="end_date" id="end_date" class="form-control">
-            <span class="add-on"><i class="icon-remove"></i></span>
-            <span class="add-on"><i class="icon-th"></i></span>
+            <input type="text" value="" name="author" id="author" class="form-control" placeholder="author">
           </div>
-          <div class="col-sm-2">
-            <button onclick='xmlCore();' class="btn btn-primary form-control">core xml</button>
-          </div>
-          <div class="col-sm-2">
-            <button onclick='jsonCore();' class="btn btn-primary form-control">core json</button>
+          <div class="col-sm-4">
+            <input type="text" value="" name="title" id="title" class="form-control" placeholder="title">
           </div>
         </div>
         <br>
         <div class="row">
           <div class="col-sm-4">
-            <select name="format" id="format" class="form-control">
-              <option value="quakeml">QuakeML</option>
-              <option value="geojson">GeoJSON</option>
-            </select>
+            <input type="text" value="" name="language" id="language" class="form-control" placeholder="language">
           </div>
           <div class="col-sm-4">
-            <select name="alertlevel" id="alertlevel" class="form-control">
-              <option value="">choose an alertlevel</option>
-              <option value="green">Green</option>
-              <option value="yellow">Yellow</option>
-              <option value="orange">Orange</option>
-              <option value="red">Red</option>
+            <input type="text" value="" name="orderby" id="orderby" class="form-control" placeholder="orderby">
+          </div>
+          <div class="col-sm-4">
+            <input type="text" value="" name="limit" id="limit" class="form-control" placeholder="limit">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-4">
+            <input type="text" value="" name="category" id="category" class="form-control" placeholder="category">
+
+          </div>
+          <div class="col-sm-4">
+            <select name="format" id="format" class="form-control">
+              <option value="xml">XML</option>
+              <option value="json">JSON</option>
             </select>
           </div>
           <div class="col-sm-4">
