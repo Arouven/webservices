@@ -1,6 +1,6 @@
 <?php
 
-require '../database.php';
+require '../php_files/database.php';
 
 new api();
 

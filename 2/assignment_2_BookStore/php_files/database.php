@@ -27,14 +27,11 @@ class database
      * @param array $paramArray
      * @return array
      */
-    public function select($query, $paramType = "", $paramArray = array())
+    public function select($query)
     {
         $stmt = $this->conn->prepare($query);
 
-        if (!empty($paramType) && !empty($paramArray)) {
 
-            $this->bindQueryParams($stmt, $paramType, $paramArray);
-        }
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -47,51 +44,5 @@ class database
         if (!empty($resultset)) {
             return $resultset;
         }
-    }
-
-    /**
-     * 1.
-     * Prepares parameter binding
-     * 2. Bind prameters to the sql statement
-     *
-     * @param string $stmt
-     * @param string $paramType
-     * @param array $paramArray
-     */
-    public function bindQueryParams($stmt, $paramType, $paramArray = array())
-    {
-        $paramValueReference[] = &$paramType;
-        for ($i = 0; $i < count($paramArray); $i++) {
-            $paramValueReference[] = &$paramArray[$i];
-        }
-        call_user_func_array(
-            array(
-                $stmt,
-                'bind_param'
-            ),
-            $paramValueReference
-        );
-    }
-
-    /**
-     * To get database results
-     *
-     * @param string $query
-     * @param string $paramType
-     * @param array $paramArray
-     * @return array
-     */
-    public function getRecordCount($query, $paramType = "", $paramArray = array())
-    {
-        $stmt = $this->conn->prepare($query);
-        if (!empty($paramType) && !empty($paramArray)) {
-
-            $this->bindQueryParams($stmt, $paramType, $paramArray);
-        }
-        $stmt->execute();
-        $stmt->store_result();
-        $recordCount = $stmt->num_rows;
-
-        return $recordCount;
     }
 }

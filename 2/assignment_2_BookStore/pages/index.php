@@ -11,19 +11,18 @@ Licence URI: https://www.os-templates.com/template-terms
 <!-- To declare your language - read more here: https://www.w3.org/International/questions/qa-html-language-declarations -->
 
 <head>
-  <title>EarthQuakes | Home Page</title>
+  <title>BookStore | Home Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
   <link href="../fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
   <link href="../bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../datatables/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
   <link href="../layout/styles/mycss.css" rel="stylesheet">
 </head>
 
 <!-- when the body load fill the elements with the appropriate details such as date time alertlevel format... -->
 
-<body id="top" onload="fillElements();">
+<body id="top">
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
@@ -58,11 +57,9 @@ Licence URI: https://www.os-templates.com/template-terms
       <nav id="mainav">
         <ul class="clear">
           <li><a href="index.php">Home Page</a></li>
-          <li><a href="regional.php">Regional EarthQuakes</a></li>
           <li class="active"><a class="drop" href="#">Pages</a>
             <ul>
               <li class="active"><a href="index.php">Home Page</a></li>
-              <li><a href="regional.php">Regional EarthQuakes</a></li>
             </ul>
           </li>
         </ul>
@@ -105,13 +102,6 @@ Licence URI: https://www.os-templates.com/template-terms
       <div class="content">
         <!-- ################################################################################################ -->
 
-        <div class="row">
-          <div class="col-sm-2">
-          </div>
-          <div class="col-sm-8">
-            <div id="clock"></div>
-          </div>
-        </div>
         <br>
         <br>
 
@@ -171,185 +161,27 @@ Licence URI: https://www.os-templates.com/template-terms
         <br>
         <br>
 
-        <!-- legend tables -->
-        <div class="legend">
-          <div class="row">
-            <div class="col-sm-3">
-              <div class="colorCode">
-                <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th colspan="2">Classes of earthquakes</th>
-                    </tr>
-                    <tr>
-                      <th>Class</th>
-                      <th>Magnitude</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="Great">
-                      <td>Great</td>
-                      <td>8 or more</td>
-                    </tr>
-                    <tr class="Major">
-                      <td>Major</td>
-                      <td>7 - 7.9</td>
-                    </tr>
-                    <tr class="Strong">
-                      <td>Strong</td>
-                      <td>6 - 6.9</td>
-                    </tr>
-                    <tr class="Moderate">
-                      <td>Moderate</td>
-                      <td>5 - 5.9</td>
-                    </tr>
-                    <tr class="Light">
-                      <td>Light</td>
-                      <td>4 - 4.9</td>
-                    </tr>
-                    <tr class="Minor">
-                      <td>Minor</td>
-                      <td>3 - 3.9</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-8">
-              <div class="colorCode">
-                <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th colspan="2">Alert Levels</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="color:green;" class="BoldMe">
-                      <td>Green</td>
-                      <td>Volcano is in typical background, non-eruptive state or, after a change from a higher level, volcanic activity has ceased and volcano has returned to noneruptive background state.</td>
-                    </tr>
-                    <tr style="color:yellow;" class="BoldMe">
-                      <td>Yellow</td>
-                      <td>Volcano is exhibiting signs of unrest above known background level or, after a change from a higher level, volcanic activity has decreased significantly but continues to be closely monitored for possible increase.</td>
-                    </tr>
-                    <tr style="color:orange;" class="BoldMe">
-                      <td>Orange</td>
-                      <td>Volcano is exhibiting heightenai or unrest with increased gx)tential of eruption, timeframe uncertain, OR eruption is underway with no or minor volcanic-ash emissions [ash-plume height specified, if possible].</td>
-                    </tr>
-                    <tr style="color:red;" class="BoldMe">
-                      <td>Red</td>
-                      <td>Eruption is imminent with significant emission of volcanic ash into the atmosphere likely OR eruption is underway or suspected with significant emission of volcanic ash into the atmosphere [ash-plume height specified, if possible].</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-3">
-            </div>
-            <div class="dateCode col-sm-6">
-              <table class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th colspan="3">Date parameters</th>
-                  </tr>
-                  <tr>
-                    <th>Parameter</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="BoldMe">
-                    <td>Endtime</td>
-                    <td>Present time</td>
-                    <td>Limit to events on or before the specified end time.</td>
-                  </tr>
-                  <tr class="BoldMe">
-                    <td>Starttime</td>
-                    <td>NOW - 30 days</td>
-                    <td>Limit to events on or after the specified start time.</td>
-                  </tr>
-                  <tr class="BoldMe">
-                    <td colspan="3" style="text-align: right;">NOTE: All times use ISO8601 Date/Time format. UTC is assumed.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+
         <br>
         <br>
 
-        <!-- main table  -->
-        <h1>Table of earthquakes</h1>
-        <div class="scrollable">
-          <div class="table-responsive">
-            <table id="earthquakes1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Date and Time (UTC)</th>
-                  <th>Name and description</th>
-                  <th>Magnitude</th>
-                  <th>Coordinates (Longitude, Latitude)</th>
-                  <th>Depth (km)</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                require('../php_files/display.php'); // allow to use the display class
-                if ($_SERVER["QUERY_STRING"] != null) { // check if there is any query in the url
-                  $url = trim($_SERVER["QUERY_STRING"]); // remove unwanted white spaces
-                  $url = strstr($url, '%27'); // keep the text as from %27 till the end
-                  $url = str_replace("%27", "", $url); // remove the %27 in the url
+        <!-- main display  -->
+        <h1>Books</h1>
+        <?php
+        // require("../php_files/page_number.php");
+        // $api = 'http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?format=json';
+        // $json = file_get_contents($api); //get the content in the json file
+        // $data = json_decode($json, true);
 
-
-                  // Use parse_url() function to parse the URL 
-                  // and return an associative array which
-                  // contains its various components
-                  $url_components = parse_url($url); // convert the text into url
-
-                  // Use parse_str() function to parse the
-                  // string passed via URL
-                  parse_str($url_components['query'], $params); // store all queries in $params
-                  new display($params['format'], $url); //create the display with the constructors parameters
-                }
-                ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        // get_the_Title();
+        //addPagination($data, 3, 'index.php');
+        require("display.php"); //display the div - list one by one
+        new display('http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?' . $_SERVER['QUERY_STRING']);
+        ?>
         <br>
         <br>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Viewing Map</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-md-12 modal_body_content" id="bodyRow1">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12 modal_body_map">
-                    <div class="location-map" id="location-map">
-                      <div style="width: 600px; height: 400px;" id="map_canvas">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <!-- ################################################################################################ -->
       </div>
       <!-- ################################################################################################ -->
@@ -363,8 +195,7 @@ Licence URI: https://www.os-templates.com/template-terms
   <div class="wrapper row4">
     <footer id="footer" class="hoc clear">
       <!-- ################################################################################################ -->
-      <h1>WorldWide Map</h1>
-      <div id="mapdiv" style="max-width:100%; height: 600px;"></div>
+
       <!-- ################################################################################################ -->
     </footer>
   </div>
@@ -389,8 +220,6 @@ Licence URI: https://www.os-templates.com/template-terms
   <script src="../layout/scripts/jquery.backtotop.js"></script>
   <script src="../layout/scripts/jquery.mobilemenu.js"></script>
   <script src="../bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="../datatables/1.10.24/js/jquery.dataTables.min.js"></script>
-  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
   <script src="../layout/scripts/myjs.js"></script>
 </body>
 

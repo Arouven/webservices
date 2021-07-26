@@ -3,4 +3,4 @@
 const HOST = 'localhost';
 const USERNAME = 'root';
 const PASSWORD = '';
-const DATABASENAME = 'bookstoresss';
+const DATABASENAME = 'bookstore';
