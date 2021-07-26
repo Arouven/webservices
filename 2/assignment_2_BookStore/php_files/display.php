@@ -4,20 +4,23 @@
 class display
 {
     private $url;
-    //private $markers;
-    //private $format;
+    private $detailedPage;
+    private $format;
 
     //default constructor
-    function __construct($url)
+    function __construct($url, $detailedPage = false)
     {
         $this->url = $url;
+        $this->detailedPage = $detailedPage;
         parse_str(strtolower($_SERVER["QUERY_STRING"]), $params); // store all queries in $params
 
         if (isset($params['format'])) {
             if ($params['format'] == 'json') {
+                $this->format = 'json';
                 $this->jsonDisplay();
             }
             if ($params["format"] == "xml") {
+                $this->format = 'xml';
                 $this->xmlDisplay();
             }
         }
@@ -27,8 +30,8 @@ class display
     function xmlDisplay()
     {
         $xml = @simplexml_load_file($this->url); //prevent errors load the xmlfile in the simplexml plugin
-        if ($xml->status == '200') {
-            foreach ($xml->children()->response->children() as $book) {
+        if ($xml->status == '200') { //if there is a good response code
+            foreach ($xml->children()->response->children() as $book) { //display the book details
                 $isbn = $book->isbn;
                 $category = $book->category;
                 $rating = $book->rating;
@@ -84,19 +87,51 @@ class display
 
     function filler($isbn,  $category, $rating, $year_published, $description, $language, $review, $best_seller, $cover_photo, $title, $author)
     {
-        echo '
-        <div class="row" style="border: 1px solid black;padding: 20px;">
-            <div class="col-sm-3"><img src="' . $cover_photo . '" style="width:150px;height:200px;" /></div>
-            <div class="col-sm-6">' . $title . '<br>by ' . $author . '<br>Category: ' . $category . '</div>
-            <div class="col-sm-3">  
-                <button type="button" 
-                class="btn btn-primary" 
-                style="width: 150px;" 
-                title="Open details" 
-                onclick="location.href = \'http://localhost/1/2/assignment_2_BookStore/pages/detail.php?isbn=' . $isbn . '\';">View Detail</button>
+        if ($this->detailedPage) {
+            echo '
+            <div class="row" style="border: 1px solid grey;padding: 20px;">
+                <div class="col-sm-4"><img src="' . $cover_photo . '" style="width:275px;height:350px;" /></div>
+                <div class="col-sm-6">
+                    <b>' . $title . '</b>
+                    <br>
+                    <b>by</b> ' . $author . '
+                    <br>
+                    <b>Category: </b>' . $category . '
+                    <br>
+                    <b>Rating: </b>' . $rating . '
+                    <br>
+                    <b>Year: </b>' . $year_published . '
+                    <br>
+                    <b>Language: </b>' . $language . '
+                    <br>
+                    <b>Review: </b>' . $review . '
+                    <br>
+                    <b>Best Seller: </b>' . $best_seller . '
+                    <br>
+                    <b>Description: </b>' . $description . '
+                    <br>
+
+                </div>
+                <div class="col-sm-3">  
+                    </div>
             </div>
-        </div>
-        <br>
-        ';
+            <br>
+            ';
+        } else {
+            echo '
+            <div class="row" style="border: 1px solid black;padding: 20px;">
+                <div class="col-sm-3"><img src="' . $cover_photo . '" style="width:150px;height:200px;" /></div>
+                <div class="col-sm-6"><b>' . $title . '<br>by </b>' . $author . '<br><b>Category: </b>' . $category . '</div>
+                <div class="col-sm-3">  
+                    <button type="button" 
+                    class="btn btn-primary" 
+                    style="width: 150px;" 
+                    title="Open details" 
+                    onclick="location.href = \'http://localhost/1/2/assignment_2_BookStore/pages/detail.php?format=' . $this->format . '&isbn=' . $isbn . '\';">View Detail</button>
+                </div>
+            </div>
+            <br>
+            ';
+        }
     }
 }

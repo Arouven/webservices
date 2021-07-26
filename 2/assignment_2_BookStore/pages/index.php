@@ -175,7 +175,7 @@ Licence URI: https://www.os-templates.com/template-terms
 
         // get_the_Title();
         //addPagination($data, 3, 'index.php');
-        require("display.php"); //display the div - list one by one
+        require("../php_files/display.php"); //display the div - list one by one
         new display('http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?' . $_SERVER['QUERY_STRING']);
         ?>
         <br>
