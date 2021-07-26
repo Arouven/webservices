@@ -7,14 +7,79 @@ require '../database.php';
 class api
 {
   private $format;
+  private $query;
   private $db;
 
-  function __construct($format = "json")
-  {
-    $this->db = new database();
-    $this->format = $format;
-  }
+  function __construct($url)
+  { // Use parse_url() function to parse the URL 
+    // and return an associative array which
+    // contains its various components
+    $url_components = parse_url(strtolower($url)); // convert the text into url
 
+    // Use parse_str() function to parse the
+    // string passed via URL
+    parse_str($url_components['query'], $params); // store all queries in $params
+    $querystring = "SELECT * FROM books";
+    if (isset($params['format'])) {
+      if ($params['format'] == 'json') {
+        $this->format = 'json';
+        $this->query = $querystring + $this->subquery($params);
+      }
+      if ($params["format"] == "xml") {
+        $this->format = 'xml';
+        $this->query = $querystring + $this->subquery($params);
+      }
+    } else {
+      print "Welcome to bookstore api!";
+      print "No api key or registration needed its all free to use!!!!!!!";
+      print "how to use?";
+      print "format(json or xml) -- ?format=json";
+      print "author(fullname or part of name) -- ?author=seventhswan";
+      print "category -- ?category=romance";
+      print "title(full title or part of title) -- ?title=Close Protection";
+      print "language -- ?language=english";
+      print "orderby -- ?orderby=rating";
+      print "limit(max number of book to output) -- ?limit=10";
+      print "";
+      print "examples";
+      print "json output with title contains 'close' -- ?format=json&title=Close";
+      print "xml output with author contains 'se', written in english, show highest rating first, limit the result to only 5 -- ?format=xml&author=se&language=english&orderby=rating&limit=5";
+    }
+
+    $this->db = new database();
+  }
+  function subquery($params)
+  {
+    $subquery = "";
+    $subqueryarray = array();
+    if (isset($params['author'])) {
+      array_push($subqueryarray, " author LIKE '%" . $params["author"] . "%'");
+    }
+    if (isset($params['category'])) {
+      array_push($subqueryarray, " category LIKE '%" . $params["category"] . "%'");
+    }
+    if (isset($params['title'])) {
+      array_push($subqueryarray,  " title LIKE '%" . $params['title'] . "%'");
+    }
+    if (isset($params['language'])) {
+      array_push($subqueryarray, " language LIKE '%" . $params['language'] . "%'");
+    }
+    if (isset($params['orderby'])) {
+      array_push($subqueryarray,  " ORDER BY " . $params['orderby'] . "");
+    }
+    if (isset($params['limit'])) {
+      array_push($subqueryarray,  " LIMIT " . $params['limit'] . "");
+    }
+    if (!empty($subqueryarray)) {
+      $subquery += " WHERE";
+      foreach ($subqueryarray as $key => $value) {
+        if (!empty($value)) {
+          $subquery += " AND" + $value;
+        }
+      }
+    }
+    return $subquery + ";";
+  }
   function select($selectquery = "SELECT * FROM books", $countquery = "SELECT COUNT(*) FROM books")
   {
     $count = $this->db->select($countquery)[0]["COUNT(*)"];
@@ -26,7 +91,7 @@ class api
       $statusCode = "200";
       $statusMessage = "Successfull";
     } else {
-      $statusCode = "400";
+      $statusCode = "404";
       $statusMessage = "Not found";
     }
     if ($this->format == 'xml') {
