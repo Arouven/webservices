@@ -15,39 +15,55 @@ class api
     // Use parse_str() function to parse the
     // string passed via URL
     parse_str(strtolower($_SERVER["QUERY_STRING"]), $params); // store all queries in $params
-    $querystring = "SELECT * FROM books";
+
     if (isset($params['format'])) {
       if ($params['format'] == 'json') {
-        $this->format = 'json';
-        $this->query = $querystring . $this->subquery($params);
+        $this->format = 'json'; //set format var to json
       }
       if ($params["format"] == "xml") {
-        $this->format = 'xml';
-        $this->query = $querystring . $this->subquery($params);
+        $this->format = 'xml'; //set format var to xml
       }
-      $this->db = new database();
-      print $this->select($this->query);
-    } else {
+      $this->query = "SELECT * FROM books" . $this->subquery($params); //generate the sql query and set the var query
+      $this->db = new database(); //create the database class
+      print $this->select($this->query); //retrieve the output from the query
+    } else { //if there is a wrong query the page will display how to use to the user
+
       print "Welcome to bookstore api!";
+      print "</br>";
       print "No api key or registration needed its all free to use!!!!!!!";
+      print "</br>";
+      print "</br>";
+      print "</br>";
       print "how to use?";
+      print "</br>";
       print "format(json or xml) -- ?format=json";
+      print "</br>";
       print "author(fullname or part of name) -- ?author=seventhswan";
+      print "</br>";
       print "category -- ?category=romance";
+      print "</br>";
       print "title(full title or part of title) -- ?title=Close Protection";
+      print "</br>";
       print "language -- ?language=english";
+      print "</br>";
       print "orderby -- ?orderby=rating";
+      print "</br>";
       print "limit(max number of book to output) -- ?limit=10";
-      print "";
+      print "</br>";
+      print "</br>";
+      print "</br>";
       print "examples";
+      print "</br>";
       print "json output with title contains 'close' -- ?format=json&title=Close";
+      print "</br>";
       print "xml output with author contains 'se', written in english, show highest rating first, limit the result to only 5 -- ?format=xml&author=se&language=english&orderby=rating&limit=5";
     }
   }
+
   function subquery($params)
-  {
+  { // generate sql sub query -- starting from 'WHERE'
     $subquery = "";
-    $subqueryarray = array();
+    $subqueryarray = array(); //everything that will have 'AND' in front will be push to array
     if (isset($params['author'])) {
       array_push($subqueryarray, " author LIKE '%" . $params["author"] . "%'");
     }
@@ -61,7 +77,7 @@ class api
       array_push($subqueryarray, " language LIKE '%" . $params['language'] . "%'");
     }
 
-    if (!empty($subqueryarray)) {
+    if (!empty($subqueryarray)) { // adding the 'AND' word infront of each value in the array
       $subquery .= " WHERE";
       foreach ($subqueryarray as $key => $value) {
         if (!empty($value)) {
@@ -69,52 +85,49 @@ class api
         }
       }
     }
-    if (isset($params['orderby'])) {
+    if (isset($params['orderby'])) { //no 'AND' infront therefore no need to push to array
       $subquery .=  " ORDER BY " . $params['orderby'] . "";
     }
-    if (isset($params['limit'])) {
+    if (isset($params['limit'])) { //no 'AND' infront therefore no need to push to array
       $subquery .=  " LIMIT " . $params['limit'] . "";
     }
-    return str_replace(' WHERE AND', ' WHERE', $subquery . ";");
+    return str_replace(' WHERE AND', ' WHERE', $subquery . ";"); //return a usable sql select query statement
   }
   function select($selectquery = "SELECT * FROM books", $countquery = "SELECT COUNT(*) FROM books")
   {
-    $count = $this->db->select($countquery)[0]["COUNT(*)"];
-    $data = $this->db->select($selectquery);
+    $count = $this->db->select($countquery)[0]["COUNT(*)"]; //get number of rows in books table
+    $data = $this->db->select($selectquery); // get all details from books table
     $statusCode = "";
     $statusMessage = "";
 
-    if (!empty($data)) {
+    if (!empty($data)) { //executed when there is format query
       $statusCode = "200";
       $statusMessage = "Successfull";
     } else {
       $statusCode = "404";
       $statusMessage = "Not found";
     }
-    if ($this->format == 'xml') {
-      return $this->deliver_xml_response($statusCode, $statusMessage, $count, $data);
-    } elseif ($this->format == 'json') {
-      return $this->deliver_json_response($statusCode, $statusMessage, $count, $data);
+
+    if ($this->format == 'json') {
+      header("Content-Type:application/json");
+      $response = $this->addStatusToData($statusCode, $statusMessage, $count, $data); //call funtion to add status code , message , totalbook  to the response
+      $json_response = json_encode($response, JSON_UNESCAPED_SLASHES); //output in json format
+      return $json_response;
+    } elseif ($this->format == 'xml') {
+      header("Content-Type:application/xml");
+      $response = $this->addStatusToData($statusCode, $statusMessage, $count, $data); //call funtion to add status code , message , totalbook  to the response
+      $xml_response = $this->xml_encode($response); //function created to immitate json_encode
+      return $xml_response;
+    } else { //bad request
+      header("Content-Type:application/json");
+      $response = $this->addStatusToData(400, 'Bad Request', $count, null); //call funtion to add status code , message , totalbook  to the response
+      $json_response = json_encode($response, JSON_UNESCAPED_SLASHES); //output in json format
+      return $json_response;
     }
   }
 
-
-  function deliver_json_response($status, $statusMessage, $count, $data)
-  {
-    header("Content-Type:application/json");
-    $response = $this->addStatusToData($status, $statusMessage, $count, $data);
-    $json_response = json_encode($response, JSON_UNESCAPED_SLASHES);
-    return $json_response;
-  }
-  function deliver_xml_response($status, $statusMessage, $count, $data)
-  {
-    header("Content-Type:application/xml");
-    $response = $this->addStatusToData($status, $statusMessage, $count, $data);
-    $xml_response = $this->xml_encode($response);
-    return $xml_response;
-  }
   function addStatusToData($status, $statusMessage, $count, $data)
-  {
+  { // adding status code , message , totalbook  to the response
     header("HTTP/1.1 $status $statusMessage");
     $response['status'] = $status;
     $response['message'] = $statusMessage;
