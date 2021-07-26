@@ -80,25 +80,25 @@ function fillElements() {
     //set the elements with the appropriate values from the query
     $('#format').val(format);
     if (isbn) {
-        $("#isbn").val();
+        $("#isbn").val(isbn);
     }
     if (author) {
-        $("#author").val();
+        $("#author").val(author);
     }
     if (category) {
-        $("#category").val();
+        $("#category").val(category);
     }
     if (title) {
-        $("#title").val();
+        $("#title").val(title);
     }
     if (language) {
-        $("#language").val();
+        $("#language").val(language);
     }
     if (orderby) {
-        $("#orderby").val();
+        $("#orderby").val(orderby);
     }
     if (limit) {
-        $('#limit').val();
+        $('#limit').val(limit);
     }
 }
 //end filling html elements

@@ -1,6 +1,4 @@
 <?php
-//include('tableFiller.php');
-
 class display
 {
     private $url;
@@ -58,8 +56,10 @@ class display
     //runs when format is json
     function jsonDisplay()
     {
+
         $json = file_get_contents($this->url); //get the content in the json file
         $data = json_decode($json, true); //get the json out of it and true to be able to use the key in the foreach loop
+
         if ($data['status'] == '200') {
             foreach ($data['response'] as $key => $value) { //key will return the position in the array
                 $isbn = $data['response'][$key]['isbn'];

@@ -30,7 +30,7 @@ Licence URI: https://www.os-templates.com/template-terms
         <header id="header" class="hoc clear">
             <!-- ################################################################################################ -->
             <div id="logo" class="one_quarter first">
-                <h1><a href="index.php"><span>E</span>arth<span>Q</span>uakes</a></h1>
+                <h1><a href="index.php"><span>B</span>ook<span>S</span>toore</a></h1>
             </div>
             <div class="three_quarter">
                 <ul class="nospace clear">
@@ -85,7 +85,7 @@ Licence URI: https://www.os-templates.com/template-terms
     <div class="wrapper bgded overlay" style="background-image:url('../images/demo/backgrounds/01.png');">
         <div id="breadcrumb" class="hoc clear">
             <!-- ################################################################################################ -->
-            <h6 class="heading">Earth Quakes</h6>
+            <h6 class="heading">BookStore</h6>
             <ul>
                 <li><a href="#">Home Page</a></li>
             </ul>
