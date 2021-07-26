@@ -139,39 +139,43 @@ Licence URI: https://www.os-templates.com/template-terms
             </select>
           </div>
           <div class="col-sm-4">
+            <input type="text" value="" name="year_published" id="year_published" class="form-control" placeholder="year published">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
             <!--on click the js will build the url and then request the server -->
             <input type="button" name="search" id="search" value="Advanced Search" class="btn btn-info form-control" onclick="buildURL();" />
           </div>
+          <br>
+          <br>
+
+
+          <br>
+          <br>
+
+          <!-- main display  -->
+          <h1>Books</h1>
+          <?php
+          // require("../php_files/page_number.php");
+          // $api = 'http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?format=json';
+          // $json = file_get_contents($api); //get the content in the json file
+          // $data = json_decode($json, true);
+
+          // get_the_Title();
+          //addPagination($data, 3, 'index.php');
+          require("../php_files/display.php"); //display the div - list one by one
+          new display('http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?' . $_SERVER['QUERY_STRING']);
+          ?>
+          <br>
+          <br>
+
+
+          <!-- ################################################################################################ -->
         </div>
-        <br>
-        <br>
-
-
-        <br>
-        <br>
-
-        <!-- main display  -->
-        <h1>Books</h1>
-        <?php
-        // require("../php_files/page_number.php");
-        // $api = 'http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?format=json';
-        // $json = file_get_contents($api); //get the content in the json file
-        // $data = json_decode($json, true);
-
-        // get_the_Title();
-        //addPagination($data, 3, 'index.php');
-        require("../php_files/display.php"); //display the div - list one by one
-        new display('http://localhost/1/2/assignment_2_BookStore/apis/myapi.php?' . $_SERVER['QUERY_STRING']);
-        ?>
-        <br>
-        <br>
-
-
         <!-- ################################################################################################ -->
-      </div>
-      <!-- ################################################################################################ -->
-      <!-- / main body -->
-      <div class="clear"></div>
+        <!-- / main body -->
+        <div class="clear"></div>
     </main>
   </div>
   <!-- ################################################################################################ -->

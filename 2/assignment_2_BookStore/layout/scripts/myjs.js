@@ -31,6 +31,7 @@ function buildURL() {
     var language = $("#language").val();
     var orderby = $("#orderby").val();
     var limit = $('#limit').val();
+    var year_published = $('#year_published').val();
 
     // build the url
     output += "format=" + format;
@@ -45,6 +46,9 @@ function buildURL() {
     }
     if (title) {
         output += "&title=" + title;
+    }
+    if (year_published) {
+        output += "&year_published=" + year_published;
     }
     if (language) {
         output += "&language=" + language;
@@ -76,6 +80,7 @@ function fillElements() {
     var language = url.searchParams.get("language");
     var orderby = url.searchParams.get("orderby");
     var limit = url.searchParams.get("limit");
+    var year_published = url.searchParams.get("year_published");
 
     //set the elements with the appropriate values from the query
     $('#format').val(format);
@@ -99,6 +104,9 @@ function fillElements() {
     }
     if (limit) {
         $('#limit').val(limit);
+    }
+    if (year_published) {
+        $('#year_published').val(year_published);
     }
 }
 //end filling html elements

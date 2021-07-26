@@ -45,6 +45,8 @@ class api
       print "</br>";
       print "title(full title or part of title) -- ?title=Close Protection";
       print "</br>";
+      print "year_published -- ?year_published=2015";
+      print "</br>";
       print "language -- ?language=english";
       print "</br>";
       print "orderby -- ?orderby=rating";
@@ -79,6 +81,9 @@ class api
     }
     if (isset($params['language'])) {
       array_push($subqueryarray, " language LIKE '%" . $params['language'] . "%'");
+    }
+    if (isset($params['year_published'])) {
+      array_push($subqueryarray, " year_published LIKE '%" . $params['year_published'] . "%'");
     }
 
     if (!empty($subqueryarray)) { // adding the 'AND' word infront of each value in the array
