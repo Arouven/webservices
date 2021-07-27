@@ -47,6 +47,8 @@ class api
       print "</br>";
       print "year_published -- ?year_published=2015";
       print "</br>";
+      print "isbn -- ?isbn=9780062407818";
+      print "</br>";
       print "language -- ?language=english";
       print "</br>";
       print "orderby -- ?orderby=rating";

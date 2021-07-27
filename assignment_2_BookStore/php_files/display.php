@@ -126,6 +126,7 @@ class display
                     <br><b>Category: </b>' . $category . '
                     <br><b>ISBN: </b>' . $isbn . '
                     <br><b>Language: </b>' . $language . '
+                    <br><b>Year: </b>' . $year_published . '
                 </div>
                 <div class="col-sm-3">  
                     <button type="button" 
