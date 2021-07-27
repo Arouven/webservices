@@ -25,7 +25,6 @@ class api
       }
       $this->query = "SELECT * FROM books" . $this->subquery($params); //generate the sql query and set the var query
       $this->db = new database(); //create the database class
-      //echo $this->query;
       print $this->select($this->query); //retrieve the output from the query
     } else { //if there is a wrong query the page will display how to use to the user
 
