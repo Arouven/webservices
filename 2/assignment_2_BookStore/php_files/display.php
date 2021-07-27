@@ -96,6 +96,8 @@ class display
                     <br>
                     <b>by</b> ' . $author . '
                     <br>
+                    <b>ISBN: </b>' . $isbn . '
+                    <br>
                     <b>Category: </b>' . $category . '
                     <br>
                     <b>Rating: </b>' . $rating . '
@@ -118,7 +120,13 @@ class display
             echo '
             <div class="row" style="border: 1px solid black;padding: 20px;">
                 <div class="col-sm-3"><img src="' . $cover_photo . '" style="width:150px;height:200px;" /></div>
-                <div class="col-sm-6"><b>' . $title . '<br>by </b>' . $author . '<br><b>Category: </b>' . $category . '</div>
+                <div class="col-sm-6">
+                    <b>' . $title . '
+                    <br>by </b>' . $author . '
+                    <br><b>Category: </b>' . $category . '
+                    <br><b>ISBN: </b>' . $isbn . '
+                    <br><b>Language: </b>' . $language . '
+                </div>
                 <div class="col-sm-3">  
                     <button type="button" 
                     class="btn btn-primary" 
