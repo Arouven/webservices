@@ -8,14 +8,11 @@ function detectQueryString() {
         return false;
     }
 };
-$(document).ready(function () {//build the big map only if there is a query in the url
+$(document).ready(function () {//build the url if there is no query in the url
     if (!detectQueryString()) {
         showAllJson();
     }
 });
-
-
-
 function showAllJson() {// open the core functionality with the current tab and with the url below
     window.open(window.location.pathname + "?format=json", "_self");
 }
@@ -60,8 +57,6 @@ function buildURL() {
         output += "&limit=" + limit;
     }
     window.open(output, "_self");//open the url in the current tab
-    //alert(output);
-
 }
 //end url
 
