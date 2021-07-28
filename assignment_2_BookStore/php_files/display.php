@@ -133,7 +133,7 @@ class display
                     class="btn btn-primary" 
                     style="width: 150px;" 
                     title="Open details" 
-                    onclick="location.href = \'http://localhost/1/2/assignment_2_BookStore/pages/detail.php?format=' . $this->format . '&isbn=' . $isbn . '\';">View Detail</button>
+                    onclick="location.href = \'http://localhost/1/assignment_2_BookStore/pages/detail.php?format=' . $this->format . '&isbn=' . $isbn . '\';">View Detail</button>
                 </div>
             </div>
             <br>
